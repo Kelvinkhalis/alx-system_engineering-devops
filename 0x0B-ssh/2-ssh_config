@@ -1,40 +1,35 @@
-# using puppet to make changes to the default ssh config file
-# so that one can connect to a server without typing a password.
+Include /etc/ssh/ssh_config.d/*.conf
 
-include stdlib
-
-file_line { 'SSH Private Key':
-  path               => '/etc/ssh/ssh_config',
-  line               => '    IdentityFile ~/.ssh/school',
-  match              => '^[#]+[\s]*(?i)IdentityFile[\s]+~/.ssh/id_rsa$',
-  replace            => true,
-  append_on_no_match => true
-}
-
-# Regex match explanation
-#
-# ^       beginning of the line
-# [#]*  atleast one hash character
-# [\s]*  zero or more white space characters
-# (?i)IdentityFile case insensitive "IdentityFile"
-# [\s]+ at least one whitespace character
-# ~/.ssh/id_rsa The ssh private key file path we want to replace
-# $      end of the line
-
-file_line { 'Deny Password Auth':
-  path               => '/etc/ssh/ssh_config',
-  line               => '    PasswordAuthentication no',
-  match              => '^[#]+[\s]*(?i)PasswordAuthentication[\s]+(yes|no)$',
-  replace            => true,
-  append_on_no_match => true
-}
-
-# Regex match explanation
-#
-# ^       beginning of the line
-# [#]*  atleast one hash character
-# [\s]*  zero or more white space characters
-# (?i)PasswordAuthentication case insensitive "PasswordAuthentication"
-# [\s]+ at least one whitespace character
-# (yes|no) with the value "yes" or the value "no"
-# $      end of the line
+Host *
+#   ForwardAgent no
+#   ForwardX11 no
+#   ForwardX11Trusted yes
+   PasswordAuthentication no
+#   HostbasedAuthentication no
+#   GSSAPIAuthentication no
+#   GSSAPIDelegateCredentials no
+#   GSSAPIKeyExchange no
+#   GSSAPITrustDNS no
+#   BatchMode no
+#   CheckHostIP yes
+#   AddressFamily any
+#   ConnectTimeout 0
+#   StrictHostKeyChecking ask
+    IdentityFile ~/.ssh/school
+#   IdentityFile ~/.ssh/id_rsa
+#   IdentityFile ~/.ssh/id_dsa
+#   IdentityFile ~/.ssh/id_ecdsa
+#   IdentityFile ~/.ssh/id_ed25519
+#   Port 22
+#   Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc
+#   MACs hmac-md5,hmac-sha1,umac-64@openssh.com
+#   EscapeChar ~
+#   Tunnel no
+#   TunnelDevice any:any
+#   PermitLocalCommand no
+#   VisualHostKey no
+#   ProxyCommand ssh -q -W %h:%p gateway.example.com
+#   RekeyLimit 1G 1h
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
