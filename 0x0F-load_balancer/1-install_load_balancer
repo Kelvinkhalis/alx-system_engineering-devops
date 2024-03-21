@@ -34,11 +34,11 @@ defaults
   timeout server 15s
   timeout http-request 10s
 
-frontend kelvinkhalis-tech-frontend
+frontend clickviral-tech-frontend
     bind *:80
     default_backend clickviral-tech-backend
 
-backend kelvinkhlis-tech-backend
+backend clickviral-tech-backend
     balance roundrobin
     server 75434-web-01 35.153.83.252:80 check
     server 75434-web-02 52.3.241.6:80 check
